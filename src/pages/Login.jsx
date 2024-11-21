@@ -3,6 +3,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
 
 // Importando o hook useState para monitorar
 import { useState } from "react";
@@ -12,10 +13,15 @@ import { useState } from "react";
 const Login = () => {
 
 // Estado inicial do formulário
-const [email, setEmail] = useState("");
-const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
+  console.log(email)
+  console.log(senha)
 
+  const[alertClass, setAlertClass] = useState("mb-3 d-none");
+  const[alertMessagem, setAlertMessage] = useState("");
+  const[alertVariant, setAlertVariant] = useState("danger");
 
   return (
   <div
@@ -80,10 +86,15 @@ const [senha, setSenha] = useState("");
           <Form.Control
             type="Senha"
             placeholder="Senha" value={senha} onChange={(e)=>{setSenha(e.target.value); }}
-            
+
             style={{ width: "100%", marginRight: "250px" }}
           />
         </FloatingLabel>
+
+        {/* Alerta caso haja erro */}
+        <Alert className={alertClass} variant={alertVariant} >
+                {alertMessagem}
+            </Alert>
 
         {/* Botão Entrar */}
         

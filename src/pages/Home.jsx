@@ -2,6 +2,11 @@ import React from "react";
 import CardProduto from "../components/CardProduto";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+
+// Importação de componentes
+import NavBarra from "../components/NavBarra";
+
+
 const Home = () => {
   const produtos = [
     {
@@ -35,6 +40,9 @@ const Home = () => {
 
   return (
     <div>
+      
+      <NavBarra />
+
       <h1 style={{ margin: "50px", color: "black" }}>Lista de produtos</h1>
       <div className="container">
         <div className="lista-produtos d-flex col-12 gap-2 mt-3 justify-content-start flex-wrap">
