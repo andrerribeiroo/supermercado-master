@@ -4,7 +4,20 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
-const Login = () => (
+// Importando o hook useState para monitorar
+import { useState } from "react";
+
+
+
+const Login = () => {
+
+// Estado inicial do formulário
+const [email, setEmail] = useState("");
+const [senha, setSenha] = useState("");
+
+
+
+  return (
   <div
     style={{
       background: "black",
@@ -53,20 +66,21 @@ const Login = () => (
         <FloatingLabel controlId="floatingInput" label="Email" className="mb-3">
           <Form.Control
             type="email"
-            placeholder="name@example.com"
+            placeholder="name@example.com" value={email} onChange={(e)=>{setEmail(e.target.value); }}
             style={{ width: "100%", marginRight: "250px" }}
           />
         </FloatingLabel>
 
         {/* Caixinha de Senha */}
         <FloatingLabel
-          controlId="floatingPassword"
+          controlId="floatingSenha"
           label="Senha"
           className="mb-3"
         >
           <Form.Control
-            type="password"
-            placeholder="Password"
+            type="Senha"
+            placeholder="Senha" value={senha} onChange={(e)=>{setSenha(e.target.value); }}
+            
             style={{ width: "100%", marginRight: "250px" }}
           />
         </FloatingLabel>
@@ -77,6 +91,7 @@ const Login = () => (
       </div>
     </Container>
   </div>
-);
+  )
+};
 
 export default Login;

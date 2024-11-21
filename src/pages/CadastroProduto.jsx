@@ -21,6 +21,8 @@ const CadastroProduto = () => {
     { id: 6, nome: "Brinquedos" },
   ];
 
+
+//   Link produto sem imagem
   const linkImagem = "https://www.malhariapradense.com.br/wp-content/uploads/2017/08/produto-sem-imagem.png";
 
 
