@@ -171,7 +171,7 @@ const CadastroProduto = () => {
                 />
               </FloatingLabel>
 
-              <Image src={linkImagem} rounded width={300} height={300} style={{
+              <Image src={imagem == "" ? linkImagem : imagem} rounded width={300} height={300} style={{
 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)"}}/>
 
               </Form.Group>
