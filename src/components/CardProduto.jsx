@@ -23,7 +23,7 @@ const CardProduto = (props) => {
           </Card.Text>
 
           <Card.Link href="/home">
-            <Button variant="warning">Editar</Button>
+            <Button variant="warning" href="/produto/editar/:id">Editar</Button>
           </Card.Link>
 
           <Card.Link href="/home">

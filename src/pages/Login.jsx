@@ -8,7 +8,7 @@ import Alert from "react-bootstrap/Alert";
 // Importando o hook useState para monitorar
 import { useState } from "react";
 
-
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -19,9 +19,67 @@ const Login = () => {
   console.log(email)
   console.log(senha)
 
+  // Função para tratar os dados de login
+
   const[alertClass, setAlertClass] = useState("mb-3 d-none");
   const[alertMessagem, setAlertMessage] = useState("");
   const[alertVariant, setAlertVariant] = useState("danger");
+
+
+  const usuarios = [
+    { id: 1, nome: "André", email:"andre@gmail.com", senha:"4321" },
+    { id: 2, nome: "Maria", email:"maria@gmail.com", senha:"1234" },
+  ]
+  
+  const navigate = useNavigate()
+
+  //guardar informações do usuario no navegador
+  const gravarLocalStorage = (usuario) => {
+    localStorage.setItem("usuarioLogado", usuario.nome)
+    localStorage.setItem("email", usuario.email)
+    localStorage.setItem("senha", usuario.senha)
+  }
+
+  const handleLogin = (e) => {
+
+    // faz com que a pagina não recarregue
+    e.preventDefault();
+    
+    // Verificar se há aquele usuário digitados na lista
+
+    const userToFind = usuarios.find(
+  (user) => user.email == email
+);
+
+if (email != "") {
+  if (senha != "") {
+    if (userToFind != undefined && userToFind.senha == senha) {
+      gravarLocalStorage(userToFind)
+      setAlertClass("mb-3 mt-2");
+      setAlertVariant("success");
+      setAlertMessage("Login efetuado com sucesso");
+      alert("Login efetuado com sucesso")
+      navigate("/home")
+    } 
+    
+    else {
+      setAlertClass("mb-3 mt-2");
+      setAlertMessage("Usuário ou senha inválidos");
+    }
+  } 
+  
+  else {
+    setAlertClass("mb-3 mt-2");
+    setAlertMessage("O campo senha não pode ser vazio");
+  }
+} 
+
+else {
+  setAlertClass("mb-3 mt-2");
+  setAlertMessage("O campo email não pode ser vazio");
+}
+};
+
 
   return (
   <div
@@ -31,6 +89,7 @@ const Login = () => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      margin: "auto"
     }}
   >
     <Container
@@ -68,6 +127,9 @@ const Login = () => {
 
         <span style={{fontSize: "100px" , color:"black" , margin: "20px"}} className="material-symbols-outlined">account_circle</span>
 
+
+        <Form style={{width: "75%", margin: "auto"}} onSubmit={handleLogin}>
+
         {/* Caixinha de Email */}
         <FloatingLabel controlId="floatingInput" label="Email" className="mb-3">
           <Form.Control
@@ -84,7 +146,7 @@ const Login = () => {
           className="mb-3"
         >
           <Form.Control
-            type="Senha"
+            type="password"
             placeholder="Senha" value={senha} onChange={(e)=>{setSenha(e.target.value); }}
 
             style={{ width: "100%", marginRight: "250px" }}
@@ -94,11 +156,13 @@ const Login = () => {
         {/* Alerta caso haja erro */}
         <Alert className={alertClass} variant={alertVariant} >
                 {alertMessagem}
-            </Alert>
+        </Alert>
 
         {/* Botão Entrar */}
         
-        <Button style={{ marginTop: "20px", width: "30%" }} variant="success" href="/home"> Entrar na Conta </Button>
+        <Button style={{ marginTop: "20px", width: "40%" }} variant="success" type="submit"> Entrar na Conta </Button>
+
+        </Form>
       </div>
     </Container>
   </div>

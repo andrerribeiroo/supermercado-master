@@ -86,7 +86,7 @@ const EditarProduto = () => {
                 >
                   <Form.Control
                     type="number"
-                    step="0.2"
+                    step="0.05"
                     placeholder="Digite o Preco do produto"
                   />
                 </FloatingLabel>

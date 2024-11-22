@@ -4,6 +4,9 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
 const NavBarra = () => {
+
+  const usuarioNome = localStorage.getItem("usuarioLogado")
+
   return (
     <div>
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
@@ -24,11 +27,19 @@ const NavBarra = () => {
             {/* Paginas */}
             <Nav className="me-auto">
               <Nav.Link href="/home" className="active">Produtos</Nav.Link>
-              <Nav.Link href="/CadastroProduto">Cadastro</Nav.Link>
+              <Nav.Link href="/produto/cadastrar">Cadastro</Nav.Link>
             </Nav>
             {/* Sair */}
             <Nav className="justify-content-end">
-              <Nav.Link href="/login">Sair</Nav.Link>
+
+              {/* Icone */}
+              <Navbar.Text style={{color: "white", marginRight:"70px", display:"flex"}}>
+
+              <span class="material-symbols-outlined" style={{color: "white", marginRight:"5px"}}>account_circle</span> {usuarioNome}
+
+              </Navbar.Text>
+
+              <Nav.Link href="/login" style={{color: "red", marginLeft:"70px"}}>Sair</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
