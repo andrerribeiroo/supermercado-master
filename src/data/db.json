@@ -1,0 +1,22 @@
+{
+    "produtos": [
+      {
+        "id": 1,
+        "nome": "Hambúrguer",
+        "descricao": "Pão, bife de hambúrguer 90g, salada e batata.",
+        "preco": 8.5,
+        "categoria_id": 1
+      }
+    ],
+    "categorias": [
+      {
+        "id": 1,
+        "nome": "Hambúrgueres"
+      },
+      {
+        "id": 2,
+        "nome": "Refrigerantes"
+      }
+    ]
+  }
+  
