@@ -6,15 +6,19 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
 // Importando o hook useState para monitorar
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
+
+// Url de API
+const url = "http://localhost:5000/usuarios"
 
 const Login = () => {
 
 // Estado inicial do formulário
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [usuarios, setUsuarios] = useState([]);
 
   console.log(email)
   console.log(senha)
@@ -26,10 +30,22 @@ const Login = () => {
   const[alertVariant, setAlertVariant] = useState("danger");
 
 
-  const usuarios = [
-    { id: 1, nome: "André", email:"andre@gmail.com", senha:"4321" },
-    { id: 2, nome: "Maria", email:"maria@gmail.com", senha:"1234" },
-  ]
+  // UseEffect pra puxar os dados do api
+  
+  useEffect(()=>{
+    async function fetchData(){
+      try{
+        const req = await fetch(url)
+        const users = await req.json()
+        setUsuarios(users)
+      }
+      catch(erro){
+        console.log(erro.message)
+      }
+    }
+    fetchData()
+  }, [])
+
   
   const navigate = useNavigate()
 
