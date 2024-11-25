@@ -22,6 +22,7 @@ const Login = () => {
 
   console.log(email)
   console.log(senha)
+  console.log(usuarios)
 
   // Função para tratar os dados de login
 
