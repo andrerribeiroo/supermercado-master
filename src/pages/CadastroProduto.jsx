@@ -9,23 +9,35 @@ import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
 
 // Importando o hook useState para monitorar
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 // Importação de componentes
 import NavBarra from "../components/NavBarra";
 
-const CadastroProduto = () => {
-  const cats = [
-    { id: 1, nome: "Bebidas" },
-    { id: 2, nome: "Alimentos" },
-    { id: 3, nome: "Saúde" },
-    { id: 4, nome: "Higiene" },
-    { id: 5, nome: "Esporte" },
-    { id: 6, nome: "Brinquedos" },
-  ];
 
+const url = "http://localhost:5000/categorias"
+
+const CadastroProduto = () => {
+  
+  const [categoriaC, setCategoriaC] = useState([]);
+
+
+
+  useEffect(()=>{
+    async function fetchData(){
+      try{
+        const req = await fetch(url)
+        const categoriaC = await req.json()
+        setCategoriaC(categoriaC)
+      }
+      catch(erro){
+        console.log(erro.message)
+      }
+    }
+    fetchData()
+  }, [])
 
 //   Link produto sem imagem
   const linkImagem = "https://www.malhariapradense.com.br/wp-content/uploads/2017/08/produto-sem-imagem.png";
@@ -123,7 +135,7 @@ const CadastroProduto = () => {
                 onChange={(e) => {setCategoria(e.target.value);}}
                 >
                 
-                  {cats.map((cat) => (
+                  {categoriaC.map((cat) => (
                     <option key={cat.id} value={cat.nome}>
                         {cat.nome}
                     </option>

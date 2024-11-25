@@ -33,13 +33,13 @@ const NavBarra = () => {
             <Nav className="justify-content-end">
 
               {/* Icone */}
-              <Navbar.Text style={{color: "white", marginRight:"70px", display:"flex"}}>
+              <Navbar.Text style={{color: "white", marginRight:"10px", display:"flex"}}>
 
               <span class="material-symbols-outlined" style={{color: "white", marginRight:"5px"}}>account_circle</span> {usuarioNome}
 
               </Navbar.Text>
 
-              <Nav.Link href="/login" style={{color: "red", marginLeft:"70px"}}>Sair</Nav.Link>
+              <Nav.Link href="/login" style={{color: "red", marginLeft:"10px"}}>Sair</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
