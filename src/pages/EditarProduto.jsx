@@ -48,7 +48,12 @@ const EditarProduto = () => {
   
       // faz com que a pagina não recarregue
       e.preventDefault();
-  
+      
+      setNome("")
+      setDescricao("")
+      setPreco("")
+      setCategoria("")
+      setImagem("")
   
       // if de alerta com textos
       if (nome != "") {

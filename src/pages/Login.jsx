@@ -15,6 +15,10 @@ const url = "http://localhost:5000/usuarios"
 
 const Login = () => {
 
+
+  localStorage.removeItem("usuarios")
+  localStorage.removeItem("email")
+
 // Estado inicial do formulário
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");

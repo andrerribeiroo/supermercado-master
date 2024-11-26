@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div style={{ height: "300vh", background: "gray"}}>
+    <div style={{ height: "220vh", background: "gray"}}>
       <NavBarra />
       <h1 style={{ margin: "50px", color: "black" }}>Lista de produtos</h1>
       <div className="container">
