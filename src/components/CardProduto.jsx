@@ -1,9 +1,22 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
+  // faz com que a pagina não recarregue
+
 const CardProduto = (props) => {
+
+  const handleDelete= async (e) => {
+
+    const req = await fetch(`http://localhost:5000/produtos/${props.id}`, {
+      method: "DELETE"
+      });
+        const res = await req.json()
+        console.log(res)
+        alert(`Produto ${res.nome} removido`)
+  };
+
   return (
-    <div>
+    <div className="col-md-4 mb-3">
       <Card style={{ width: "16rem", height: "30rem" }}>
         {/* Imagem do Card */}
         <Card.Img variant="top" src={props.imagemUrl} height="200px" />
@@ -27,7 +40,7 @@ const CardProduto = (props) => {
           </Card.Link>
 
           <Card.Link href="/home">
-            <Button variant="danger">Excluir</Button>
+            <Button variant="danger" type="button" onClick={handleDelete} >Excluir</Button>
           </Card.Link>
 
         </Card.Body>

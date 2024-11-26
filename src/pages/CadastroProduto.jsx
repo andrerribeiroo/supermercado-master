@@ -18,6 +18,7 @@ import NavBarra from "../components/NavBarra";
 
 
 const url = "http://localhost:5000/categorias"
+const url2 = "http://localhost:5000/produtos"
 
 const CadastroProduto = () => {
   
@@ -47,7 +48,7 @@ const CadastroProduto = () => {
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [imagem, setImagem] = useState("");
+  const [imagemUrl, setImagemUrl] = useState("");
 
   const [alertClass, setAlertClass] = useState("mb-3 d-none");
   const [alertMessagem, setAlertMessage] = useState("");
@@ -67,13 +68,29 @@ const CadastroProduto = () => {
     if (nome != "") {
       if (descricao != "") {
         if (preco != "") {
-          const produto = {nome, descricao, categoria, preco, imagem}
-          console.log(produto)
-          setAlertClass("mb-3 mt-2");
-          setAlertVariant("success");
-          setAlertMessage("Cadastro efetuado com sucesso");
-          alert("Produto cadastrado com sucesso")
-          navigate("/home")
+          const produto = {nome, descricao, categoria, preco, imagemUrl}
+          console.log(produto);
+          
+          try{
+            const req = await fetch(url2, {
+              method: 'POST',
+              headers: {"Content-Type": "application/json",},
+              body: JSON.stringify(produto),
+              });
+
+              const res = await req.json()
+              console.log(res);
+
+              setAlertClass("mb-3 mt-2");
+              setAlertVariant("success");
+              setAlertMessage("Cadastro efetuado com sucesso");
+              alert("Produto cadastrado com sucesso");
+              navigate("/home");
+          }
+          catch(error){
+            console.log(error.message);
+          }
+          
         }
         else {
           setAlertClass("mb-3 mt-2");
@@ -178,12 +195,12 @@ const CadastroProduto = () => {
                 <Form.Control
                   type="Text"
                   placeholder="Envie o link da IMAGEM do produto"
-                  value={imagem}
-                  onChange={(e) => {setImagem(e.target.value)}}
+                  value={imagemUrl}
+                  onChange={(e) => {setImagemUrl(e.target.value)}}
                 />
               </FloatingLabel>
 
-              <Image src={imagem == "" ? linkImagem : imagem} rounded width={300} height={300} style={{
+              <Image src={imagemUrl == "" ? linkImagem : imagemUrl} rounded width={300} height={300} style={{
 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)"}}/>
 
               </Form.Group>
