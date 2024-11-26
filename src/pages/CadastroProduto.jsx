@@ -63,6 +63,12 @@ const CadastroProduto = () => {
     // faz com que a pagina não recarregue
     e.preventDefault();
 
+    //faça com que quando eu cadastrar um produto, todos os requisitos volte do 0
+    setNome("");
+    setDescricao("");
+    setPreco("");
+    setCategoria("");
+    setImagemUrl("");
 
     // if de alerta com textos
     if (nome != "") {
@@ -85,7 +91,10 @@ const CadastroProduto = () => {
               setAlertVariant("success");
               setAlertMessage("Cadastro efetuado com sucesso");
               alert("Produto cadastrado com sucesso");
+              setTimeout(() => {
               navigate("/home");
+              }, 2000);
+                  
           }
           catch(error){
             console.log(error.message);
