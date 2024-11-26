@@ -43,6 +43,14 @@
       "categoria": "Brinquedos",
       "preco": "670",
       "imagemUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJFbZhq582mJr1hQ8MN_i-R8lnKr1Dma3xow&s"
+    },
+    {
+      "id": "9032",
+      "nome": "Skript.gg",
+      "descricao": "hack menu",
+      "categoria": "Esporte",
+      "preco": "150",
+      "imagemUrl": "https://i.ytimg.com/vi/4ktxTWZ7TSY/maxresdefault.jpg"
     }
   ],
   "categorias": [

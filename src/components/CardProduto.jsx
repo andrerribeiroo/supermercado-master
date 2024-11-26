@@ -16,8 +16,8 @@ const CardProduto = (props) => {
   };
 
   return (
-    <div className="col-md-4 mb-3">
-      <Card style={{ width: "16rem", height: "30rem" }}>
+    <div >
+      <Card style={{ width: "22rem", height: "30rem" }}>
         {/* Imagem do Card */}
         <Card.Img variant="top" src={props.imagemUrl} height="200px" />
 
