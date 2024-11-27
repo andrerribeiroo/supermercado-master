@@ -8,78 +8,134 @@ import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import Image from "react-bootstrap/Image";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 // Importação de componentes
 import NavBarra from "../components/NavBarra";
 
+const url = "http://localhost:5000/categorias"
+const url2 = "http://localhost:5000/produtos"
 
 const EditarProduto = () => {
-    const cats = [
-      { id: 1, nome: "Bebidas" },
-      { id: 2, nome: "Alimentos" },
-      { id: 3, nome: "Saúde" },
-      { id: 4, nome: "Higiene" },
-      { id: 5, nome: "Esporte" },
-      { id: 6, nome: "Brinquedos" },
-    ];
+    
+  const [categoriaC, setCategoriaC] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData(){
+      try{
+        const req = await fetch(url);
+        const cate = await req.json();
+        setCategoriaC(cate);
+      }
+      catch(erro){
+        console.log(erro.message)
+      }
+    }
+    fetchData();
+  }, []);
   
   
   //   Link produto sem imagem
     const linkImagem = "https://www.malhariapradense.com.br/wp-content/uploads/2017/08/produto-sem-imagem.png";
+
   
     const [nome, setNome] = useState("");
     const [descricao, setDescricao] = useState("");
     const [preco, setPreco] = useState("");
     const [categoria, setCategoria] = useState("");
-    const [imagem, setImagem] = useState("");
+    const [imagemUrl, setImagemUrl] = useState("");
   
     const [alertClass, setAlertClass] = useState("mb-3 d-none");
     const [alertMessagem, setAlertMessage] = useState("");
     const [alertVariant, setAlertVariant] = useState("danger");
-  
-    // Criando o navigate
+
+
     const navigate = useNavigate()
-  
-      // Função pra lidar com o recarregamento da página
-      const handleSubmit = async (e) => {
-  
-      // faz com que a pagina não recarregue
-      e.preventDefault();
-      
-      setNome("")
-      setDescricao("")
-      setPreco("")
-      setCategoria("")
-      setImagem("")
-  
-      // if de alerta com textos
-      if (nome != "") {
-        if (descricao != "") {
-          if (preco != "") {
-            const produto = {nome, descricao, categoria, preco, imagem}
-            console.log(produto)
-            setAlertClass("mb-3 mt-2");
-            setAlertVariant("success");
-            setAlertMessage("Cadastro efetuado com sucesso");
-            alert("Produto cadastrado com sucesso")
-            navigate("/home")
+
+    // cod para pegar a url atual e transformar em um array
+    const params = window.location.pathname.split("/")
+    const idProd = params[params.length - 1]
+
+
+    //Buscar as informações do produto
+    useEffect(() => {
+      async function fetchData(){
+        try{
+          const req = await fetch(`http://localhost:5000/produtos/${idProd}`)
+          const prod = await req.json()
+          console.log(prod)
+          setNome(prod.nome)
+          setDescricao(prod.descricao)
+          setPreco(prod.preco)
+          setImagemUrl(prod.imagemUrl == "" ? "" : prod.imagemUrl)
+          setCategoria(prod.categoria)
+        }
+        catch(error){
+        console.log(error.message)
+        }
+      }
+      fetchData()
+    })
+
+    // Função pra lidar com o recarregamento da página
+    const handleSubmit = async (e) => {
+
+    // faz com que a pagina não recarregue
+    e.preventDefault();
+
+    //faça com que quando eu cadastrar um produto, todos os requisitos volte do 0
+    setNome("");
+    setDescricao("");
+    setPreco("");
+    setCategoria("");
+    setImagemUrl("");
+
+    // if de alerta com textos
+    if (nome != "") {
+      if (descricao != "") {
+        if (preco != "") {
+          const produto = {nome, descricao, categoria, preco, imagemUrl}
+          console.log(produto);
+          
+          try{
+            const req = await fetch(`http://localhost:5000/produtos/${idProd}`, {
+              method: 'PUT',
+              headers: {"Content-Type": "application/json",},
+              body: JSON.stringify(produto),
+              });
+
+              const res = await req.json()
+              console.log(res);
+
+              setAlertClass("mb-3 mt-2");
+              setAlertVariant("success");
+              setAlertMessage("Cadastro efetuado com sucesso");
+              alert("Produto cadastrado com sucesso");
+              setTimeout(() => {
+              navigate("/home");
+              }, 2000);
+                  
           }
-          else {
-            setAlertClass("mb-3 mt-2");
-            setAlertMessage("O campo preço não pode ser vazio");
+          catch(error){
+            console.log(error.message);
           }
-        } else {
+          
+        }
+        else {
           setAlertClass("mb-3 mt-2");
-          setAlertMessage("O campo descrição não pode ser vazio");
+          setAlertMessage("O campo preço não pode ser vazio");
         }
       } else {
         setAlertClass("mb-3 mt-2");
-        setAlertMessage("O campo nome não pode ser vazio");
+        setAlertMessage("O campo descrição não pode ser vazio");
       }
-    };  
+    } else {
+      setAlertClass("mb-3 mt-2");
+      setAlertMessage("O campo nome não pode ser vazio");
+    }
+  };  
 
 
     return (
@@ -128,7 +184,7 @@ const EditarProduto = () => {
   
                   <option>Selecione uma categoria</option>
   
-                    {cats.map((cat) => (
+                    {categoriaC.map((cat) => (
                       <option key={cat.id} value={cat.nome}>
                           {cat.nome}
                       </option>
@@ -171,12 +227,12 @@ const EditarProduto = () => {
                   <Form.Control
                     type="Text"
                     placeholder="Envie o link da IMAGEM do produto"
-                    value={imagem}
-                    onChange={(e) => {setImagem(e.target.value)}}
+                    value={imagemUrl}
+                    onChange={(e) => {setImagemUrl(e.target.value)}}
                   />
                 </FloatingLabel>
   
-                <Image src={imagem == "" ? linkImagem : imagem} rounded width={300} height={300} style={{
+                <Image src={imagemUrl == "" ? linkImagem : imagemUrl} rounded width={300} height={300} style={{
   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06)"}}/>
   
                 </Form.Group>
